@@ -8,8 +8,16 @@ from pypdf import PdfReader
 from docx import Document
 
 # Load API Key
+
 load_dotenv()
+
 api_key = os.getenv("GEMINI_API_KEY")
+
+if not api_key:
+    try:
+        api_key = st.secrets.get("GEMINI_API_KEY")
+    except Exception:
+        api_key = None
 
 # Initialize Gemini
 client = genai.Client(api_key=api_key) if api_key else None
